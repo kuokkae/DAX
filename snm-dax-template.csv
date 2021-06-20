@@ -1,0 +1,33 @@
+﻿MEASURE_NAME,EXPRESSION,MEASUREGROUP_NAME
+Sum of Units,SUM('SalesFact'[Units]),SalesFact
+Sum of Revenue,SUM('SalesFact'[Revenue]),SalesFact
+Sum of Score,SUM('Sentiment'[Score]),Sentiment
+Average of Score,AVERAGE('Sentiment'[Score]),Sentiment
+Count of Product,COUNTA('Product'[Product]),Product
+Total Units,SUM([Units]),SalesFact
+Sales $,SUM([Revenue]),SalesFact
+Sentiment,AVERAGE(Sentiment[Score]),SalesFact
+Total Units YTD,"TOTALYTD([TOTAL UNITS], 'Date'[Date])",SalesFact
+Total VanArsdel Units YTD,"CALCULATE([Total Units YTD], FILTER(ALL(Product[isVanArsdel]), Product[isVanArsdel]=""Yes""))",SalesFact
+Total OTHER Units YTD,"CALCULATE([Total Units YTD], FILTER(ALL(Product[isVanArsdel]), Product[isVanArsdel]=""No""))",SalesFact
+Total VanArsdel Units,"CALCULATE([Total Units], FILTER(ALL(Product[isVanArsdel]), Product[isVanArsdel]=""Yes""))",SalesFact
+Total OTHER Units,"CALCULATE([Total Units], FILTER(ALL(Product[isVanArsdel]), Product[isVanArsdel]=""No""))",SalesFact
+% Units Market Share,"IF([Total VanArsdel Units]=0, 0, DIVIDE([Total VanArsdel Units], [Total Units], 0))",SalesFact
+Total Category Volume,CALCULATE([Total Units]),SalesFact
+Total Compete Volume,"CALCULATE([Total Units], FILTER('Product', Product[isVanArsdel]=""No""))",SalesFact
+% Category Compete Share,"DIVIDE([Total Compete Volume], [Total Category Volume])",SalesFact
+TOTAL UNITS SPLY,"CALCULATE([TOTAL UNITS],SAMEPERIODLASTYEAR('Date'[Date]))",SalesFact
+Total Units YTD SPLY,"CALCULATE([Total Units YTD], SAMEPERIODLASTYEAR('Date'[Date]))",SalesFact
+Total VanArsdel Units YTD SPLY,"CALCULATE([Total VanArsdel Units YTD], SAMEPERIODLASTYEAR('Date'[Date]))",SalesFact
+Total OTHER Units YTD SPLY,"CALCULATE([Total OTHER Units YTD], SAMEPERIODLASTYEAR('Date'[Date]))",SalesFact
+% Units Market Share YTD,"DIVIDE([Total VanArsdel Units YTD], [Total Units YTD])",SalesFact
+% Market Share SPLY YTD,"CALCULATE([% Units Market Share YTD], SAMEPERIODLASTYEAR('Date'[Date]))",SalesFact
+% Unit Market Share YOY Change,[% Units Market Share]-[% Units Market Share SPLY],SalesFact
+% Units Market Share SPLY,"CALCULATE([% Units Market Share], SAMEPERIODLASTYEAR('Date'[Date]))",SalesFact
+Total Units R12Ms,"CALCULATE(SUM([Units]), FILTER(ALL('Date'), 'Date'[MonthIndex]<=MAX('Date'[MonthIndex])&& 'Date'[MonthIndex]> MAX('Date'[MonthIndex])-12))",SalesFact
+Total VanArsdel Units R12M,"CALCULATE([Total Units R12Ms], FILTER(ALL(Product[isVanArsdel]), Product[isVanArsdel]=""Yes""))",SalesFact
+Total OTHER Units R12M,"CALCULATE([Total Units R12Ms], FILTER(ALL(Product[isVanArsdel]), Product[isVanArsdel]=""No""))",SalesFact
+% Units Market Share R12M,"IF([Total VanArsdel Units R12M]=0, 0, DIVIDE([Total VanArsdel Units R12M], [Total Units R12Ms], 0))",SalesFact
+Sentiment Gap,"IF(ISBLANK(CALCULATE([Sentiment], Manufacturer[MfgisVanArsdel]=""No""))||ISBLANK(CALCULATE([Sentiment], Manufacturer[MfgisVanArsdel]=""Yes"")), BLANK(), CALCULATE([Sentiment], Manufacturer[MfgisVanArsdel]=""No"") - CALCULATE([Sentiment], Manufacturer[MfgisVanArsdel]=""Yes""))",SalesFact
+Total Units YTD Var,[Total Units YTD]-[Total Units YTD SPLY],SalesFact
+Total Units YTD Var %,"DIVIDE([Total Units YTD Var],[TOTAL UNITS SPLY])",SalesFact
