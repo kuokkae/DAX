@@ -1,0 +1,177 @@
+﻿MEASURE_NAME,EXPRESSION,MEASUREGROUP_NAME
+Actual $,SUM([Actual]),Finance Data
+Budget $,SUM([Budget]),Finance Data
+Act Ending HC,"CALCULATE(SUM('Finance Data'[Actual People]),LASTNONBLANK('Finance Data'[Date], IF(CALCULATE(SUM('Finance Data'[Actual People]),All(Accounts))=0,BLANK(),CALCULATE(SUM('Finance Data'[Actual People]),ALL(Accounts)))),All(Accounts))",Finance Data
+Bud Ending HC,"CALCULATE(SUM('Finance Data'[Budget People]),LASTNONBLANK('Finance Data'[Date], IF(CALCULATE(SUM('Finance Data'[Budget People]),All(Accounts))=0,BLANK(),CALCULATE(SUM('Finance Data'[Budget People]),ALL(Accounts)))),All(Accounts))",Finance Data
+VTB $,[Budget $]-[Actual $],Finance Data
+Act Avg HC,"AVERAGEX( VALUES('Finance Data'[Fiscal Month]), [Act Ending HC])",Finance Data
+Act Anlzd CPH,"IF([Act Avg HC], [Anlzd Actual People Cost $]/[Act Avg HC], BLANK())",Finance Data
+Actual HC Total,[Act Avg HC]*[CountOfActualMonths],Finance Data
+YTD Actual $,"TOTALYTD([Actual $], 'Date'[Date],ALL('Date'), ""6/30"")",Finance Data
+YTD Budget $,"TOTALYTD([Budget $], 'Date'[Date],ALL('Date'), ""6/30"")",Finance Data
+Prior YTD Actual $,"CALCULATE([YTD Actual $], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+VTB HC,[Budget HC Total]-[Actual HC Total],Finance Data
+VTB %,"IF([Budget $], [VTB $]/ABS([Budget $]), BLANK())",Finance Data
+Budget Remaining $,"CALCULATE([Budget $], ALL('Finance Data'[Date]))-[YTD Actual $]",Finance Data
+Budget Attain %,"IF([Budget $], [YTD Actual $]/CALCULATE([Budget $], ALL('Finance Data'[Date])), BLANK())",Finance Data
+Prior Ending HC,"CALCULATE([Act Ending HC], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior $,"CALCULATE([Actual $], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior Avg HC,"CALCULATE([Act Avg HC], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior HC Total,"CALCULATE([Actual HC Total],DATEADD('Date'[Date],-1,Year),All(Accounts))",Finance Data
+Prior Act Anlzd CPH,"CALCULATE([Anlzd Actual People Cost $], DATEADD('Date'[Date],-1, Year))/CALCULATE([Act Avg HC], DATEADD('Date'[Date],-1, Year))",Finance Data
+Budget HC Total,[Bud Avg HC]*[CountOfBudgetMonths],Finance Data
+Bud Avg HC,"AVERAGEX( VALUES('Finance Data'[Fiscal Month]), [Bud Ending HC])",Finance Data
+Bud Anlzd CPH,"IF([Bud Avg HC], [Anlzd Budget People Cost $]/[Bud Avg HC], BLANK())",Finance Data
+VTB Rate,([Bud Anlzd CPH]/12-[Act Anlzd CPH]/12)*[Actual HC Total],Finance Data
+VTB Volume,[VTB HC]*[Bud Anlzd CPH]/12,Finance Data
+VTB Ending HC,[Bud Ending HC]-[Act Ending HC],Finance Data
+VTB Avg HC,[Bud Avg HC]-[Act Avg HC],Finance Data
+Bud YoY $,"IF(CONTAINS(Accounts, Accounts[Class], ""Net Revenue""), -([Budget $]-[Prior $]), ([Budget $]-[Prior $]))",Finance Data
+Bud YoY %,"IF([Prior $], [Bud YoY $]/ABS([Prior $]),BLANK())",Finance Data
+Bud YoY Ending HC,[Bud Ending HC]-[Prior Ending HC],Finance Data
+Bud YoY Avg HC,[Bud Avg HC]-[Prior Avg HC],Finance Data
+Bud YoY HC,[Budget HC Total]-[Prior HC Total],Finance Data
+Bud YoY Rate,([Bud Anlzd CPH]/12-[Prior Act Anlzd CPH]/12)*[Budget HC Total],Finance Data
+Bud YoY Volume,[Bud YoY HC]*[Prior Act Anlzd CPH]/12,Finance Data
+Actual $,SUM([Actual]),Finance Data
+Forecast $,SUM([Forecast]),Finance Data
+Act Ending HC,"CALCULATE(SUM('Finance Data'[Actual People]),LASTNONBLANK('Finance Data'[Date], IF(CALCULATE(SUM('Finance Data'[Actual People]),All(Accounts))=0,BLANK(),CALCULATE(SUM('Finance Data'[Actual People]),ALL(Accounts)))),All(Accounts))",Finance Data
+Act Avg HC,"AVERAGEX( VALUES('Finance Data'[Fiscal Month]), [Act Ending HC])",Finance Data
+Act Anlzd CPH,"IF([Act Avg HC], [Anlzd Actual People Cost $]/[Act Avg HC], BLANK())",Finance Data
+Actual HC Total,[Act Avg HC]*[CountOfActualMonths],Finance Data
+Fcst Ending HC,"CALCULATE(SUM('Finance Data'[Forecast People]),LASTNONBLANK('Finance Data'[Date], IF(CALCULATE(SUM('Finance Data'[Forecast People]),All(Accounts))=0,BLANK(),CALCULATE(SUM('Finance Data'[Forecast People]),ALL(Accounts)))),All(Accounts))",Finance Data
+YTD Actual $,"TOTALYTD([Actual $], 'Date'[Date],ALL('Date'), ""6/30"")",Finance Data
+YTD Forecast $,"TOTALYTD([Forecast $], 'Date'[Date],ALL('Date'), ""6/30"")",Finance Data
+Prior YTD Actual $,"CALCULATE([YTD Actual $], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Fcst VTB $,[Budget $]-[Forecast $],Finance Data
+VTF $,[Forecast $]-[Actual $],Finance Data
+Fcst VTB %,"IF([Budget $], [Fcst VTB $]/ABS([Budget $]), BLANK())",Finance Data
+VTF %,"IF([Forecast $], [VTF $]/ABS([Forecast $]), BLANK())",Finance Data
+Forecast Remaining $,"CALCULATE([Forecast $], ALL('Finance Data'[Date]))-[YTD Actual $]",Finance Data
+Forecast Attain %,"IF([Forecast $], [YTD Actual $]/CALCULATE([Forecast $], ALL('Finance Data'[Date])), BLANK())",Finance Data
+Prior Ending HC,"CALCULATE([Act Ending HC], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior $,"CALCULATE([Actual $], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior Avg HC,"CALCULATE([Act Avg HC], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior HC Total,"CALCULATE([Actual HC Total],DATEADD('Date'[Date],-1,Year),All(Accounts))",Finance Data
+Prior Act Anlzd CPH,"CALCULATE([Anlzd Actual People Cost $], DATEADD('Date'[Date],-1, Year))/CALCULATE([Act Avg HC], DATEADD('Date'[Date],-1, Year))",Finance Data
+Forecast HC Total,[Fcst Avg HC]*[CountOfFcstMonths],Finance Data
+Fcst Avg HC,"AVERAGEX( VALUES('Finance Data'[Fiscal Month]), [Fcst Ending HC])",Finance Data
+Fcst Anlzd CPH,"IF([Fcst Avg HC], [Anlzd Fcst People Cost $]/[Fcst Avg HC], BLANK())",Finance Data
+VTF Ending HC,[Fcst Ending HC]-[Act Ending HC],Finance Data
+VTF Avg HC,[Fcst Avg HC]-[Act Avg HC],Finance Data
+VTF HC,[Forecast HC Total]-[Actual HC Total],Finance Data
+VTF Rate,([Fcst Anlzd CPH]/12-[Act Anlzd CPH]/12)*[Actual HC Total],Finance Data
+VTF Volume,[VTF HC]*[Fcst Anlzd CPH]/12,Finance Data
+Fcst VTB Rate,([Bud Anlzd CPH]/12-[Fcst Anlzd CPH]/12)*[Forecast HC Total],Finance Data
+Fcst VTB Volume,[Fcst VTB HC]*[Bud Anlzd CPH]/12,Finance Data
+Fcst VTB Ending HC,[Bud Ending HC]-[Fcst Ending HC],Finance Data
+Fcst VTB Avg HC,[Bud Avg HC]-[Fcst Avg HC],Finance Data
+Fcst VTB HC,[Budget HC Total]-[Forecast HC Total],Finance Data
+Fcst YoY $,"IF(CONTAINS(Accounts, Accounts[Class], ""Net Revenue""), -([Forecast $]-[Prior $]), ([Forecast $]-[Prior $]))",Finance Data
+Fcst YoY %,"IF([Prior $],[Fcst YoY $]/ABS([Prior $]),BLANK())",Finance Data
+Fcst YoY Ending HC,[Fcst Ending HC]-[Prior Ending HC],Finance Data
+Fcst YoY Avg HC,[Fcst Avg HC]-[Prior Avg HC],Finance Data
+Fcst YoY HC,[Forecast HC Total]-[Prior HC Total],Finance Data
+Fcst YoY Rate,([Fcst Anlzd CPH]/12-[Prior Act Anlzd CPH]/12)*[Forecast HC Total],Finance Data
+Fcst YoY Volume,[Fcst YoY HC]*[Prior Act Anlzd CPH]/12,Finance Data
+__No measures defined,1,
+Sum of Actual,SUM('Finance Data'[Actual]),Finance Data
+Sum of Actual People,SUM('Finance Data'[Actual People]),Finance Data
+Actual $,SUM([Actual]),Finance Data
+Budget $,SUM([Budget]),Finance Data
+Forecast $,SUM([Forecast]),Finance Data
+Act Ending HC,"CALCULATE(SUM('Finance Data'[Actual People]),LASTNONBLANK('Finance Data'[Date], IF(CALCULATE(SUM('Finance Data'[Actual People]),All(Accounts))=0,BLANK(),CALCULATE(SUM('Finance Data'[Actual People]),ALL(Accounts)))),All(Accounts))",Finance Data
+Bud Ending HC,"CALCULATE(SUM('Finance Data'[Budget People]),LASTNONBLANK('Finance Data'[Date], IF(CALCULATE(SUM('Finance Data'[Budget People]),All(Accounts))=0,BLANK(),CALCULATE(SUM('Finance Data'[Budget People]),ALL(Accounts)))),All(Accounts))",Finance Data
+VTB $,[Budget $]-[Actual $],Finance Data
+Act Avg HC,"AVERAGEX( VALUES('Finance Data'[Fiscal Month]), [Act Ending HC])",Finance Data
+Act Anlzd CPH,"IF([Act Avg HC], [Anlzd Actual People Cost $]/[Act Avg HC], BLANK())",Finance Data
+Actual HC Total,[Act Avg HC]*[CountOfActualMonths],Finance Data
+Fcst Ending HC,"CALCULATE(SUM('Finance Data'[Forecast People]),LASTNONBLANK('Finance Data'[Date], IF(CALCULATE(SUM('Finance Data'[Forecast People]),All(Accounts))=0,BLANK(),CALCULATE(SUM('Finance Data'[Forecast People]),ALL(Accounts)))),All(Accounts))",Finance Data
+YTD Actual $,"TOTALYTD([Actual $], 'Date'[Date],ALL('Date'), ""6/30"")",Finance Data
+YTD Budget $,"TOTALYTD([Budget $], 'Date'[Date],ALL('Date'), ""6/30"")",Finance Data
+YTD Forecast $,"TOTALYTD([Forecast $], 'Date'[Date],ALL('Date'), ""6/30"")",Finance Data
+Prior YTD Actual $,"CALCULATE([YTD Actual $], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+YoY $,"IF(CONTAINS(Accounts, Accounts[Class], ""Net Revenue""), -([Actual $]-[Prior $]), ([Actual $]-[Prior $]))",Finance Data
+YoY Ending HC,[Act Ending HC]-[Prior Ending HC],Finance Data
+YoY %,"IF([Prior $], [YoY $]/ABS([Prior $]),BLANK())",Finance Data
+Fcst VTB $,[Budget $]-[Forecast $],Finance Data
+VTF $,[Forecast $]-[Actual $],Finance Data
+VTB HC,[Budget HC Total]-[Actual HC Total],Finance Data
+Fcst VTB %,"IF([Budget $], [Fcst VTB $]/ABS([Budget $]), BLANK())",Finance Data
+VTB %,"IF([Budget $], [VTB $]/ABS([Budget $]), BLANK())",Finance Data
+VTF %,"IF([Forecast $], [VTF $]/ABS([Forecast $]), BLANK())",Finance Data
+Budget Remaining $,"CALCULATE([Budget $], ALL('Finance Data'[Date]))-[YTD Actual $]",Finance Data
+Budget Attain %,"IF([Budget $], [YTD Actual $]/CALCULATE([Budget $], ALL('Finance Data'[Date])), BLANK())",Finance Data
+Forecast Remaining $,"CALCULATE([Forecast $], ALL('Finance Data'[Date]))-[YTD Actual $]",Finance Data
+Forecast Attain %,"IF([Forecast $], [YTD Actual $]/CALCULATE([Forecast $], ALL('Finance Data'[Date])), BLANK())",Finance Data
+Prior Ending HC,"CALCULATE([Act Ending HC], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior $,"CALCULATE([Actual $], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior Avg HC,"CALCULATE([Act Avg HC], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior HC Total,"CALCULATE([Actual HC Total],DATEADD('Date'[Date],-1,Year),All(Accounts))",Finance Data
+Prior Act Anlzd CPH,"CALCULATE([Anlzd Actual People Cost $], DATEADD('Date'[Date],-1, Year))/CALCULATE([Act Avg HC], DATEADD('Date'[Date],-1, Year))",Finance Data
+YoY Avg HC,[Act Avg HC]-[Prior Avg HC],Finance Data
+YoY HC,[Actual HC Total]-[Prior HC Total],Finance Data
+YoY Rate,([Act Anlzd CPH]/12-[Prior Act Anlzd CPH]/12)*[Actual HC Total],Finance Data
+YoY Volume,[YoY HC]*[Prior Act Anlzd CPH]/12,Finance Data
+Budget HC Total,[Bud Avg HC]*[CountOfBudgetMonths],Finance Data
+Forecast HC Total,[Fcst Avg HC]*[CountOfFcstMonths],Finance Data
+Bud Avg HC,"AVERAGEX( VALUES('Finance Data'[Fiscal Month]), [Bud Ending HC])",Finance Data
+Fcst Avg HC,"AVERAGEX( VALUES('Finance Data'[Fiscal Month]), [Fcst Ending HC])",Finance Data
+Bud Anlzd CPH,"IF([Bud Avg HC], [Anlzd Budget People Cost $]/[Bud Avg HC], BLANK())",Finance Data
+Fcst Anlzd CPH,"IF([Fcst Avg HC], [Anlzd Fcst People Cost $]/[Fcst Avg HC], BLANK())",Finance Data
+VTB Rate,([Bud Anlzd CPH]/12-[Act Anlzd CPH]/12)*[Actual HC Total],Finance Data
+VTB Volume,[VTB HC]*[Bud Anlzd CPH]/12,Finance Data
+VTB Ending HC,[Bud Ending HC]-[Act Ending HC],Finance Data
+VTB Avg HC,[Bud Avg HC]-[Act Avg HC],Finance Data
+VTF Ending HC,[Fcst Ending HC]-[Act Ending HC],Finance Data
+VTF Avg HC,[Fcst Avg HC]-[Act Avg HC],Finance Data
+VTF HC,[Forecast HC Total]-[Actual HC Total],Finance Data
+VTF Rate,([Fcst Anlzd CPH]/12-[Act Anlzd CPH]/12)*[Actual HC Total],Finance Data
+VTF Volume,[VTF HC]*[Fcst Anlzd CPH]/12,Finance Data
+Fcst VTB Rate,([Bud Anlzd CPH]/12-[Fcst Anlzd CPH]/12)*[Forecast HC Total],Finance Data
+Fcst VTB Volume,[Fcst VTB HC]*[Bud Anlzd CPH]/12,Finance Data
+Fcst VTB Ending HC,[Bud Ending HC]-[Fcst Ending HC],Finance Data
+Fcst VTB Avg HC,[Bud Avg HC]-[Fcst Avg HC],Finance Data
+Fcst VTB HC,[Budget HC Total]-[Forecast HC Total],Finance Data
+Bud YoY $,"IF(CONTAINS(Accounts, Accounts[Class], ""Net Revenue""), -([Budget $]-[Prior $]), ([Budget $]-[Prior $]))",Finance Data
+Bud YoY %,"IF([Prior $], [Bud YoY $]/ABS([Prior $]),BLANK())",Finance Data
+Bud YoY Ending HC,[Bud Ending HC]-[Prior Ending HC],Finance Data
+Bud YoY Avg HC,[Bud Avg HC]-[Prior Avg HC],Finance Data
+Bud YoY HC,[Budget HC Total]-[Prior HC Total],Finance Data
+Bud YoY Rate,([Bud Anlzd CPH]/12-[Prior Act Anlzd CPH]/12)*[Budget HC Total],Finance Data
+Bud YoY Volume,[Bud YoY HC]*[Prior Act Anlzd CPH]/12,Finance Data
+Fcst YoY $,"IF(CONTAINS(Accounts, Accounts[Class], ""Net Revenue""), -([Forecast $]-[Prior $]), ([Forecast $]-[Prior $]))",Finance Data
+Fcst YoY %,"IF([Prior $],[Fcst YoY $]/ABS([Prior $]),BLANK())",Finance Data
+Fcst YoY Ending HC,[Fcst Ending HC]-[Prior Ending HC],Finance Data
+Fcst YoY Avg HC,[Fcst Avg HC]-[Prior Avg HC],Finance Data
+Fcst YoY HC,[Forecast HC Total]-[Prior HC Total],Finance Data
+Fcst YoY Rate,([Fcst Anlzd CPH]/12-[Prior Act Anlzd CPH]/12)*[Forecast HC Total],Finance Data
+Fcst YoY Volume,[Fcst YoY HC]*[Prior Act Anlzd CPH]/12,Finance Data
+CountOfActualMonths,"CALCULATE(DISTINCTCOUNT('Finance Data'[Fiscal Month]),'Finance Data'[Actual]<>0)",Finance Data
+Actual People Cost $,"CALCULATE([Actual $],  FILTER('Finance Data', RELATED(Accounts[Sub Class])=""People""))",Finance Data
+Anlzd Actual People Cost $,"IF([CountOfActualMonths], [Actual People Cost $]* 12/[CountOfActualMonths], BLANK())",Finance Data
+CountOfBudgetMonths,"CALCULATE(DISTINCTCOUNT('Finance Data'[Fiscal Month]),'Finance Data'[Budget]<>0)",Finance Data
+Budget People Cost $,"CALCULATE([Budget $], FILTER('Finance Data', RELATED(Accounts[Sub Class])=""People""))",Finance Data
+Anlzd Budget People Cost $,"IF([CountOfBudgetMonths], [Budget People Cost $]* 12/[CountOfBudgetMonths], BLANK())",Finance Data
+CountOfFcstMonths,"CALCULATE(DISTINCTCOUNT('Finance Data'[Fiscal Month]),'Finance Data'[Forecast]<>0)",Finance Data
+Fcst People Cost $,"CALCULATE([Forecast $], FILTER('Finance Data', RELATED(Accounts[Sub Class])=""People""))",Finance Data
+Anlzd Fcst People Cost $,"IF([CountOfFcstMonths], [Fcst People Cost $]* 12/[CountOfFcstMonths], BLANK())",Finance Data
+Actual $,SUM([Actual]),Finance Data
+Act Ending HC,"CALCULATE(SUM('Finance Data'[Actual People]),LASTNONBLANK('Finance Data'[Date], IF(CALCULATE(SUM('Finance Data'[Actual People]),All(Accounts))=0,BLANK(),CALCULATE(SUM('Finance Data'[Actual People]),ALL(Accounts)))),All(Accounts))",Finance Data
+Act Avg HC,"AVERAGEX( VALUES('Finance Data'[Fiscal Month]), [Act Ending HC])",Finance Data
+Act Anlzd CPH,"IF([Act Avg HC], [Anlzd Actual People Cost $]/[Act Avg HC], BLANK())",Finance Data
+Actual HC Total,[Act Avg HC]*[CountOfActualMonths],Finance Data
+YTD Actual $,"TOTALYTD([Actual $], 'Date'[Date],ALL('Date'), ""6/30"")",Finance Data
+Prior YTD Actual $,"CALCULATE([YTD Actual $], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+YoY $,"IF(CONTAINS(Accounts, Accounts[Class], ""Net Revenue""), -([Actual $]-[Prior $]), ([Actual $]-[Prior $]))",Finance Data
+YoY Ending HC,[Act Ending HC]-[Prior Ending HC],Finance Data
+YoY %,"IF([Prior $], [YoY $]/ABS([Prior $]),BLANK())",Finance Data
+Prior Ending HC,"CALCULATE([Act Ending HC], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior $,"CALCULATE([Actual $], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior Avg HC,"CALCULATE([Act Avg HC], DATEADD('Date'[Date],-1,YEAR))",Finance Data
+Prior HC Total,"CALCULATE([Actual HC Total],DATEADD('Date'[Date],-1,Year),All(Accounts))",Finance Data
+Prior Act Anlzd CPH,"CALCULATE([Anlzd Actual People Cost $], DATEADD('Date'[Date],-1, Year))/CALCULATE([Act Avg HC], DATEADD('Date'[Date],-1, Year))",Finance Data
+YoY Avg HC,[Act Avg HC]-[Prior Avg HC],Finance Data
+YoY HC,[Actual HC Total]-[Prior HC Total],Finance Data
+YoY Rate,([Act Anlzd CPH]/12-[Prior Act Anlzd CPH]/12)*[Actual HC Total],Finance Data
+YoY Volume,[YoY HC]*[Prior Act Anlzd CPH]/12,Finance Data
