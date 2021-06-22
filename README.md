@@ -2,7 +2,7 @@
 
 code dump for dax measure
 
-resources:/n
+resources:
 https://www.daxpatterns.com/
-/n https://www.sqlbi.com/
-/n https://portal.enterprisedna.co/
+https://www.sqlbi.com/
+ https://portal.enterprisedna.co/
